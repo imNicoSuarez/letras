@@ -17,7 +17,6 @@ body {
   height: 100%;
   font-size: 10rem;
   text-transform: uppercase;
-  outline: none;
-  resize: none;
+  word-wrap: break-word;
   overflow: auto;
 }
