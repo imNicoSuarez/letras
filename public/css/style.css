@@ -10,7 +10,7 @@ body {
   margin: 0;
 }
 
-textarea {
+.editor {
   font-family: 'Quicksand', sans-serif;
   border: none;
   width: 100%;

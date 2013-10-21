@@ -1,3 +1,3 @@
 $(function () {
-  $("#theTextArea").focus();
+  $("#theEditor").focus();
 });
