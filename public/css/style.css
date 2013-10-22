@@ -8,14 +8,20 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
+  background-color: #d0d0d0;
+  background-image: url('../images/sos.png');
+  background-repeat: repeat;
 }
 
 .editor {
+  box-sizing: border-box;
+  margin: 0 4rem;
+  padding: 3rem 4rem;
+  background-color: white;
   font-family: 'Quicksand', sans-serif;
   font-size: 10rem;
   line-height: 100%;
   border: none;
-  width: 100%;
   height: 100%;
   text-transform: uppercase;
   word-wrap: break-word;
