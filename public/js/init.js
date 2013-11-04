@@ -2,8 +2,8 @@ $(function () {
   var fontHeight = ($(window).height() / 3) + "px",
       $editor = $("#theEditor");
 
+  $editor.fitText(1.0, { factor: 5 });
   $editor.focus();
-  // $editor.css("line-height", fontHeight);
 
   $("body").keypress(function( event ) {
     var chr = event.charCode,
