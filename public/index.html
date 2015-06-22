@@ -5,11 +5,30 @@
     <title>granletra</title>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Quicksand">
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script src="js/jquery.fittext.js"></script>
-    <script src="js/init.js"></script>
   </head>
   <body>
-    <div class="editor" id="theEditor"></div>
+    <div class="c-editor js-editor" contenteditable="true"></div>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script>
+      function insertAtCursor( node ) {
+        var sel, range;
+          sel = window.getSelection();
+          range = sel.getRangeAt(0);
+          range.deleteContents();
+          range.insertNode( node );
+          sel.addRange( range );
+          sel.collapseToEnd();
+      }
+
+      $(".js-editor").keypress(function( event ) {
+        var chr = event.charCode,
+            colors = ["red", "green", "blue", "orange", "pink", "gray", "brown", "black"],
+            i = Math.floor(Math.random() * colors.length),
+            span = $("<span style=\"color: " + colors[i] + ";\">" + String.fromCharCode(chr) + "</span>");
+
+        insertAtCursor( span[0] );
+        event.preventDefault();
+      });
+    </script>
   </body>
 </html>
