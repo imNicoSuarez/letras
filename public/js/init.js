@@ -1,22 +1,27 @@
 $(function () {
   var fontHeight = ($(window).height() / 3) + "px",
-      $editor = $("#theEditor");
+      $editor = $(".js-editor");
 
   $editor.fitText(1.0, { factor: 5 });
   $editor.focus();
 
-  $("body").keypress(function( event ) {
-    var chr = event.charCode,
+  $("html").on( "keydown" , function( event ) {
+    var keyCode = event.which,
         colors = ["red", "green", "blue", "orange", "pink", "gray", "brown", "black"],
         i = Math.floor(Math.random() * colors.length),
-        span = $("<span style=\"color: " + colors[i] + ";\">" + String.fromCharCode(chr) + "</span>").hide();
+        letterContainer;
 
+    if ( keyCode == 8 ) {
+      $editor.children().last().remove();
+    } else if ( keyCode >= 48 && keyCode <= 90 ) {
+      letterContainer = $("<span style=\"color: " + colors[i] + ";\">" + String.fromCharCode( keyCode ) + "</span>").hide();
+      $editor.append( letterContainer );
+      letterContainer.show('slow');
 
-    $editor.append(span);
-    span.show('slow');
-
-    $editor.scrollTop($editor.prop("scrollHeight"));
+      $editor.scrollTop($editor.prop("scrollHeight"));
+    }
 
     event.preventDefault();
-  });
+    return false;
+  } );
 });
