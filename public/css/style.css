@@ -27,3 +27,7 @@ body {
   word-wrap: break-word;
   overflow: auto;
 }
+
+.c-editor:focus {
+  outline: 0;
+}
