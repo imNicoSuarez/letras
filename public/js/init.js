@@ -1,10 +1,37 @@
 var SymbolFactory = (function() {
-  var colors, symbolElements;
+  var colors, symbolElements, allowedSymbols, cachedSvgs = [];
+  allowedSymbols = [ "a" ];
+  function loadSvg( url ) {
+    return $.get( url );
+  }
+  function preloadSvgs() {
+    var cachedLoadSvgPromises = [];
+    return $.Deferred(function( dfd ) {
+      var i = 0;
+      allowedSymbols.forEach(function( symbol ) {
+        cachedLoadSvgPromises[ i ] = loadSvg( "images/char-" + symbol + ".svg" );
+        i++;
+      });
+      $.when.apply( $, cachedLoadSvgPromises ).done(function() {
+        // collects returned data in the arguments.
+        var args = Array.prototype.slice.call( arguments ), i = 0;
+        allowedSymbols.forEach(function( symbol ) {
+          cachedSvgs[ symbol ] = $( args[ i ] ).find( "svg" );
+          i++;
+        });
+        dfd.resolve();
+      });
+    }).promise();
+  }
   colors = ["red", "green", "blue", "orange", "pink", "gray", "brown", "black"];
   symbolElements = {
     'A': function() {
-      var symbolContainer, paths, pathLength, maxPathLength = -1;
-      symbolContainer = Snap.parse("<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"118.909px\" height=\"155.824px\" viewBox=\"0 0 118.909 155.824\" enable-background=\"new 0 0 118.909 155.824\" xml:space=\"preserve\"><g fill=\"none\" stroke-width=\"6\" stroke=\"" + colors[ Math.floor(Math.random() * colors.length) ] + "\" stroke-linejoin=\"round\" class=\"c-char-a\"><path class=\"c-char-a_first\" fill=\"none\" stroke-miterlimit=\"10\"d=\"M0.467,155.638L59.442,0.5h0.025l58.974,155.146\"/><path class=\"c-char-a_second\" fill=\"none\" stroke-miterlimit=\"10\" d=\"M18.006,109.5h83\"/></g></svg>");
+      var symbolContainer, pathGroup, paths, pathLength, maxPathLength = -1;
+
+      symbolContainer = Snap(cachedSvgs[ "a" ].clone().get(0));
+
+      pathGroup = symbolContainer.select("g");
+      pathGroup.attr({ stroke: colors[ Math.floor(Math.random() * colors.length) ] });
       paths = symbolContainer.selectAll("path");
       paths.forEach(function( path ) {
         pathLength = path.getTotalLength();
@@ -32,6 +59,9 @@ var SymbolFactory = (function() {
   };
 
   return {
+    ready: function( fn ) {
+      preloadSvgs().done( fn );
+    },
     create: function( character ) {
       return symbolElements[ character ]();
     },
@@ -39,54 +69,55 @@ var SymbolFactory = (function() {
 })();
 
 $( document ).ready(function () {
+  SymbolFactory.ready(function() {
+    var fontHeight = ($(window).height() / 3) + "px",
+        editor = $(".js-editor");
 
-  var fontHeight = ($(window).height() / 3) + "px",
-      editor = $(".js-editor");
-
-  editor.fitText(1.0, { factor: 5 });
-  editor.focus();
-
-  function moveCursorAfter( node ) {
-    var sel = window.getSelection(),
-        range = document.createRange();
-
-    range.setStartAfter( node );
-    range.collapse( true );
-    sel.removeAllRanges();
-    sel.addRange( range );
-  }
-
-  // Symbols can be, e.g. "A", "1", "&nbsp;", etc.
-  function appendSymbol( container, symbol ) {
-    var symbol;
-
-    symbol = SymbolFactory.create( symbol );
-    container.append( symbol.element() );
-    symbol.animate();
-
-    moveCursorAfter( symbol.element()[0] );
-  }
-
-  $("html").keydown( function( event ) {
-    var keyCode = event.which,
-        sel, range, caretTop;
-
+    editor.fitText(1.0, { factor: 5 });
     editor.focus();
 
-    if ( keyCode == 8 ) {
-      editor.children().last().remove();
-    } else if ( keyCode >= 48 && keyCode <= 90 ) {
-      appendSymbol( editor, String.fromCharCode( keyCode ) );
-    } else if ( keyCode == 32 ) {
-      appendSymbol( editor, "&nbsp;" );
+    function moveCursorAfter( node ) {
+      var sel = window.getSelection(),
+          range = document.createRange();
+
+      range.setStartAfter( node );
+      range.collapse( true );
+      sel.removeAllRanges();
+      sel.addRange( range );
     }
 
-    sel = window.getSelection();
+    // Symbols can be, e.g. "A", "1", "&nbsp;", etc.
+    function appendSymbol( container, symbol ) {
+      var symbol;
 
-    editor.scrollTop(editor.prop("scrollHeight"));
+      symbol = SymbolFactory.create( symbol );
+      container.append( symbol.element() );
+      symbol.animate();
 
-    event.preventDefault();
-    return false;
-  } );
+      moveCursorAfter( symbol.element()[0] );
+    }
 
+    $("html").keydown( function( event ) {
+      var keyCode = event.which,
+          sel, range, caretTop;
+
+      editor.focus();
+
+      if ( keyCode == 8 ) {
+        editor.children().last().remove();
+      } else if ( keyCode >= 48 && keyCode <= 90 ) {
+        appendSymbol( editor, String.fromCharCode( keyCode ) );
+      } else if ( keyCode == 32 ) {
+        appendSymbol( editor, "&nbsp;" );
+      }
+
+      sel = window.getSelection();
+
+      editor.scrollTop(editor.prop("scrollHeight"));
+
+      event.preventDefault();
+      return false;
+    });
+
+  });
 });
