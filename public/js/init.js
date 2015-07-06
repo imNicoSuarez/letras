@@ -1,6 +1,6 @@
 var SymbolFactory = (function() {
-  var colors, symbolElements, allowedSymbols, cachedSvgs = [];
-  allowedSymbols = [ "a" ];
+  var symbolElements, allowedKeyCodes, cachedSvgs = [];
+  allowedKeyCodes = [ 65 ];
   function loadSvg( url ) {
     return $.get( url );
   }
@@ -8,35 +8,40 @@ var SymbolFactory = (function() {
     var cachedLoadSvgPromises = [];
     return $.Deferred(function( dfd ) {
       var i = 0;
-      allowedSymbols.forEach(function( symbol ) {
+      allowedKeyCodes.forEach(function( symbol ) {
         cachedLoadSvgPromises[ i ] = loadSvg( "images/char-" + symbol + ".svg" );
         i++;
       });
       $.when.apply( $, cachedLoadSvgPromises ).done(function() {
         // collects returned data in the arguments.
         var args = Array.prototype.slice.call( arguments ), i = 0;
-        allowedSymbols.forEach(function( symbol ) {
-          cachedSvgs[ symbol ] = $( args[ i ] ).find( "svg" );
+        allowedKeyCodes.forEach(function( keyCode ) {
+          cachedSvgs[ keyCode ] = $( args[ i ] ).find( "svg" );
           i++;
         });
         dfd.resolve();
       });
     }).promise();
   }
-  colors = ["red", "green", "blue", "orange", "pink", "gray", "brown", "black"];
-  symbolElements = {
-    'A': function() {
-      var symbolContainer, pathGroup, paths, pathLength, maxPathLength = -1;
 
-      symbolContainer = Snap(cachedSvgs[ "a" ].clone().get(0));
+  return {
+    ready: function( fn ) {
+      preloadSvgs().done( fn );
+    },
+    create: function( keyCode ) {
+      var colors, strokeColor, symbolContainer, paths, pathLength, maxPathLength = -1;
 
-      pathGroup = symbolContainer.select("g");
-      pathGroup.attr({ stroke: colors[ Math.floor(Math.random() * colors.length) ] });
+      colors = ["red", "green", "blue", "orange", "pink", "gray", "brown", "black"];
+      strokeColor = colors[ Math.floor(Math.random() * colors.length) ];
+
+      symbolContainer = Snap(cachedSvgs[ keyCode ].clone().get(0));
+
       paths = symbolContainer.selectAll("path");
       paths.forEach(function( path ) {
         pathLength = path.getTotalLength();
         if ( pathLength > maxPathLength ) maxPathLength = pathLength;
         path.attr({
+          stroke: strokeColor,
           strokeDasharray: pathLength + " " + pathLength,
           strokeDashoffset: pathLength
         });
@@ -55,15 +60,6 @@ var SymbolFactory = (function() {
           });
         }
       }
-    }
-  };
-
-  return {
-    ready: function( fn ) {
-      preloadSvgs().done( fn );
-    },
-    create: function( character ) {
-      return symbolElements[ character ]();
     },
   };
 })();
@@ -87,10 +83,10 @@ $( document ).ready(function () {
     }
 
     // Symbols can be, e.g. "A", "1", "&nbsp;", etc.
-    function appendSymbol( container, symbol ) {
+    function appendSymbol( container, keyCode ) {
       var symbol;
 
-      symbol = SymbolFactory.create( symbol );
+      symbol = SymbolFactory.create( keyCode );
       container.append( symbol.element() );
       symbol.animate();
 
@@ -106,9 +102,7 @@ $( document ).ready(function () {
       if ( keyCode == 8 ) {
         editor.children().last().remove();
       } else if ( keyCode >= 48 && keyCode <= 90 ) {
-        appendSymbol( editor, String.fromCharCode( keyCode ) );
-      } else if ( keyCode == 32 ) {
-        appendSymbol( editor, "&nbsp;" );
+        appendSymbol( editor, keyCode );
       }
 
       sel = window.getSelection();
