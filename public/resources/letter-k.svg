@@ -3,9 +3,9 @@
 
     <g stroke="none" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
         <g class="letter k" transform="translate(9.000000, 10.000000)" stroke="#D19B9B" stroke-width="20">
-            <path d="M1.03125,0 L1,185" class="k1"></path>
-            <path d="M133,2 L2,124" class="k2"></path>
-            <path d="M136,191 L53,85" class="k3"></path>
+            <path d="M1.03125,0 L1,185" class="animate-1"></path>
+            <path d="M133,2 L2,124" class="animate-2"></path>
+            <path d="M136,191 L53,85" class="animate-3"></path>
         </g>
     </g>
 </svg>

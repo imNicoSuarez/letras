@@ -4,7 +4,7 @@
 
     <g stroke="none" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
         <g class="letter n" transform="translate(10.000000, 10.000000)" stroke-width="20" stroke="#D19B9B">
-            <polyline class="n1" points="138 0 138 185 0.03125 0 0 185"></polyline>
+            <polyline class="animate-1" points="138 0 138 185 0.03125 0 0 185"></polyline>
         </g>
     </g>
 </svg>

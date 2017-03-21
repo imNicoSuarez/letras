@@ -1,3 +1,5 @@
+/*General Styles*/
+
 html {
   height: 100%;
 }
@@ -26,4 +28,52 @@ body {
   text-transform: uppercase;
   word-wrap: break-word;
   overflow: auto;
+}
+
+svg {
+  float: left;
+  margin: 10px 8px;
+}
+
+/*Animation Letter*/
+
+.letter{
+  stroke-dasharray: 5;
+}
+
+
+/*LETTER AMINATE*/
+
+.animate {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dash 1s linear alternate forwards;
+}
+
+.animate--delay-1{
+  animation-delay: 250ms;
+}
+.animate--delay-2{
+  animation-delay: 500ms;
+}
+.animate--delay-3{
+  animation-delay: 750ms;
+}
+.animate--delay-4{
+  animation-delay: 1000ms;
+}
+.animate--delay-5{
+  animation-delay: 1250ms;
+}
+
+
+
+/*ANIMATION*/
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
 }

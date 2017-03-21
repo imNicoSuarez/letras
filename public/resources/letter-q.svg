@@ -4,9 +4,9 @@
 
     <g stroke="none" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
         <g class="letter q" transform="translate(9.000000, 10.000000)" stroke="#D19B9B">
-            <path d="M88.5707398,0 C38.5707398,0 1.76952783,39.7502187 1,89 C0.230472167,138.249781 32.6053263,189 88.5707398,189 C144.536153,189 175,141 175,94.5 C175,48 138.57074,0 88.5707398,0 Z" class="q1" stroke-width="20"></path>
-            <path d="M100,188 L36,219" class="q2" stroke-width="15"></path>
-            <path d="M37,219 C37,219 73,203 118.5,230 C164,257 200,213 200,213" class="q3" stroke-width="20"></path>
+            <path d="M88.5707398,0 C38.5707398,0 1.76952783,39.7502187 1,89 C0.230472167,138.249781 32.6053263,189 88.5707398,189 C144.536153,189 175,141 175,94.5 C175,48 138.57074,0 88.5707398,0 Z" class="animate-1" stroke-width="20"></path>
+            <path d="M100,188 L36,219" class="animate-2" stroke-width="15"></path>
+            <path d="M37,219 C37,219 73,203 118.5,230 C164,257 200,213 200,213" class="animate-3" stroke-width="20"></path>
         </g>
     </g>
 </svg>

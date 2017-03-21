@@ -4,8 +4,8 @@
 
     <g stroke="none" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
         <g class="letter x" transform="translate(10.000000, 10.000000)" stroke="#D18D8D" stroke-width="20">
-            <path d="M2,0 L141,191" class="x1"></path>
-            <path d="M0,189 L142,0" class="x2"></path>
+            <path d="M2,0 L141,191" class="animate-1"></path>
+            <path d="M0,189 L142,0" class="animate-2"></path>
         </g>
     </g>
 </svg>
