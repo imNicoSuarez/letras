@@ -1,0 +1,11 @@
+<svg width="158px" height="276px" viewBox="0 0 158 276" 
+     version="1.1" xmlns="http://www.w3.org/2000/svg" 
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <g stroke="none" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g class="letter ñ" transform="translate(10.000000, 10.000000)" stroke="#D19B9B" stroke-width="20">
+            <polyline class="ñ1" points="138 71 138 256 0.03125 71 0 256"></polyline>
+            <path d="M4,28 C4,28 27,-21.3477342 65.5,11.8261329 C104,45 133,21 133,1" class="ñ2"></path>
+        </g>
+    </g>
+</svg>

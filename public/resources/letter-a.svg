@@ -1,0 +1,12 @@
+<svg width="176px" height="212px" viewBox="0 0 176 212" version="1.1" 
+    xmlns="http://www.w3.org/2000/svg" 
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <g stroke="none"  fill="none" fill-rule="evenodd" stroke-linejoin="round" stroke-linecap="round">
+        <g class="letter a" transform="translate(11.000000, 11.000000)" stroke="#D28D8D" stroke-width="21">
+            <path d="M78,0 L0,190" class="a1"></path>
+            <path d="M78,0 L154,187" class="a2"></path>
+            <path d="M25,130.5 L131,130.5" class="a3"></path>
+        </g>
+    </g>
+</svg>
